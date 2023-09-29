@@ -5,11 +5,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1>Form</h1>
+<h1>Trenton Lindquist's Blackboard to Examsoft converter</h1>
+<h2>Please put your test name in the field, and then paste in the test from blackboard. Only 4 and 3 answer questions are currently supported</h2>
 <form action="#" th:action="@{/TestPrepared}" th:object="${test}" method="post">
-    <p>Id: <input type="text" th:field="*{testTitle}" /></p>
-    <p>Message: <textarea name="news_content" rows="20" cols="80" th:field="*{testData}"></textarea></p>
+    <p>Test Name: <input type="text" th:field="*{testTitle}" /></p>
+    <p>Paste test here: <textarea name="news_content" rows="20" cols="80" th:field="*{testData}"></textarea></p>
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
+
+<h2> All rights reserved or whatever so I can one day sell this thing lol</h2>
 </body>
 </html>

@@ -13,30 +13,49 @@ public class TestConversionService {
 
     public String testConvert(Test test) {
 
+test.setTestData(test.getTestData().replaceAll("Option *", "Answer "));
+        int numQuestForMultipleChoiceRemoval = 1;
+        while(test.getTestData().contains("| \r\n\r\nMultiple Choice")){
+            System.out.println("FOUND");
+            test.setTestData(test.getTestData().replaceFirst( "\\| \r\n\r\nMultiple Choice *","Question " + numQuestForMultipleChoiceRemoval));
+            numQuestForMultipleChoiceRemoval++;
 
-        String regex = "(Question [0-9]+[\\s\\S]*?\\n(?=Question [0-9]+|$))";
+        }
+
+        System.out.println(test.getTestData());
+       // System.out.println(test.getTestData());
+
+        String regex = "(Question [0-9]+[\\s\\S]*?\\n*(?=Question [0-9]+|$))";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher m = pattern.matcher(test.getTestData());
         ArrayList<String> myList = new ArrayList<String>();
         ArrayList<Integer> jpgNeededList = new ArrayList<Integer>();
 
+//        test.getTestData().contains("|");
+      // System.out.println(test.getTestData());
+//        Pattern removeMultipleChoicePattern = Pattern.compile("\\| \r\n\r\nMultiple Choice");
+//        Matcher removeMultipleChoiceMatcher = removeMultipleChoicePattern.matcher(test.getTestData());
+
+//      test.setTestData(test.getTestData().replaceAll("\\| \r\n\r\nMultiple Choice", "Hello"));
+    // System.out.println(test.getTestData());
+
 //        System.out.println(test.getTestData());
 
         while (m.find()) {
-            //	System.out.println(m.group(0));
-            if (m.group(0).contains(" \n \n \n \n \n ") || m.group(0).contains(" \n \n \n \n \n \n \n \n")) {
-                myList.add(m.group(0).replaceAll("\\nFull credit given ", "").replaceAll(" \\n \\n \\n \\n \\n \\n \\n", "").replaceAll(" \\n \\n \\n \\n \\n ", " "));
-                jpgNeededList.add(myList.size() - 1);
+       //     	System.out.println(m.group(0));
+            if (m.group(0).contains(".png") || m.group(0).contains(".jpg") || m.group(0).contains(".jpeg")|| m.group(0).contains(".jpeg")) {
+                myList.add(m.group(0).replaceAll("\\r\\n\\r\\nFull credit given ", "").replaceAll(" \\n \\n \\n \\n \\n \\n \\n", "").replaceAll(" \\n \\n \\n \\n \\n ", " "));
+                jpgNeededList.add(myList.size());
             } else {
                 // System.out.println("found");
-                myList.add(m.group(0).replaceAll("\\nFull credit given ", "").replaceAll(" \\n \\n \\n \\n \\n \\n \\n ", "").replaceAll(" \\n \\n \\n \\n \\n ", " ").replaceAll("  \\n \\n \\n \\n", " "));
+                myList.add(m.group(0).replaceAll("\\r\\n\\r\\nFull credit given ", "").replaceAll(" \\n \\n \\n \\n \\n \\n \\n ", "").replaceAll(" \\n \\n \\n \\n \\n ", " ").replaceAll("  \\n \\n \\n \\n", " "));
                 //  System.out.println(myList.get(0));
             }
         }
-//        System.out.println("____________________________________");
-//        System.out.println(myList.size());
-//        System.out.println("----------------------");
+        System.out.println("____________________________________");
+        System.out.println(myList.size());
+        System.out.println("----------------------");
 //        System.out.println("Something");
 //        for (String l :
 //                myList) {
@@ -53,13 +72,13 @@ public class TestConversionService {
         m.reset();
 
 
-        String regexMulitpleChoiceFourAnswers = "(Question [0-9]+?) *\\r\\n\\r\\n[0-9]+ *\\r\\n\\r\\npoints* *\\r\\n([\\s\\S]*? *\\r\\n \\r\\n|[\\s\\S]*? *\\r\\n+)(Answer 1 *\\r\\n\\r\\n.* *\\r\\n *\\r\\n[\\s\\S]*?)(Answer 2 *\\r\\n\\r\\n.* *\\r\\n *\\r\\n[\\s\\S]*?)(Answer 3 *\\r\\n\\r\\n.* *\\r\\n *\\r\\n[\\s\\S]*?)(Answer 4[\\s\\S]*)";
+        String regexMulitpleChoiceFourAnswers = "(Question [0-9]+?) *[\\r\\n]*[0-9]+ *[\\r\\n]*points* *\\r\\n([\\s\\S]*? *\\r\\n \\r\\n|[\\s\\S]*? *\\r\\n+)(Answer 1 *[\\r\\n]*.* *\\r\\n *\\r\\n[\\s\\S]*?)(Answer 2 *[\\r\\n]*.* *\\r\\n *\\r\\n[\\s\\S]*?)(Answer 3 *[\\r\\n]*.* *\\r\\n *\\r\\n[\\s\\S]*?)(Answer 4[\\s\\S]*)";
 
 
         Pattern pattern2 = Pattern.compile(regexMulitpleChoiceFourAnswers);
 
 
-        String regexMultipleChoiceThreeAnswers = "(Question [0-9]+?) *\\n[0-9]+ *\\npoints* *\\n(.*? *\\n \\n|.*? *\\n+)(Answer 1 \\n.* \\n *\\n[\\s\\S]*?)(Answer 2 \\n.* \\n *\\n[\\s\\S]*?)(Answer 3[\\s\\S]*)";
+        String regexMultipleChoiceThreeAnswers = "(Question [0-9]+?) *\\r\\n\\r\\n[0-9]+ *\\r\\n\\r\\npoints* *\\r\\n([\\s\\S]*? *\\r\\n \\r\\n|[\\s\\S]*? *\\r\\n+)(Answer 1 *[\\r\\n]*.* *\\r\\n *\\r\\n[\\s\\S]*?)(Answer 2 *[\\r\\n]*.* *\\r\\n *\\r\\n[\\s\\S]*?)(Answer 3[\\s\\S]*)";
 
         Pattern regexMultipleThreeAnswers = Pattern.compile(regexMultipleChoiceThreeAnswers);
 
@@ -92,7 +111,7 @@ public class TestConversionService {
                 numList.add(value);
                 sb.append(value);
                 sb.append(". ");
-                sb.append(m.group(2).trim());
+                sb.append(m.group(2).trim().replace("\r\n\r\n", ""));
                 sb.append("\n");
 
                 sb.append(ifCorrectAppendAsteriskMultipleChoice(m.group(3), 'a'));
@@ -139,6 +158,7 @@ public class TestConversionService {
                     sb.append(ifCorrectAppendAsteriskMultipleChoice(multipleChoiceThreem.group(3), 'a'));
                     sb.append(ifCorrectAppendAsteriskMultipleChoice(multipleChoiceThreem.group(4), 'b'));
                     sb.append(ifCorrectAppendAsteriskMultipleChoice(multipleChoiceThreem.group(5), 'c'));
+                    sb.append("\n");
                     System.out.println(sb);
                 }
             }
@@ -167,18 +187,22 @@ public class TestConversionService {
         }
         System.out.println(sb);
         System.out.println(revolution);
+        System.out.println("Images needed for questions: " + jpgNeededList);
         return sb.toString();
     }
 
 
-    static String ifCorrectAppendAsteriskMultipleChoice(String question, char letterAnswer) {
+    static String ifCorrectAppendAsteriskMultipleChoice(String questionUntrimmed, char letterAnswer) {
 
         StringBuilder returned = new StringBuilder();
 
-        if(question.contains("Correct answer")) {
+      String question = questionUntrimmed.replace("\r\n\r\n", "");
+
+        if(question.contains("Correct answer") || question.contains("Correct Answer")) {
             returned.append("*"+letterAnswer+". ");
-            String removeAnswer = question.replaceAll("Answer [0-4]", "");
-            String trimmed = removeAnswer.replaceAll("Correct answer", "").trim();
+            String removeOption = question.replaceAll("Option [0-4]", "");
+            String removeAnswer = removeOption.replaceAll("Answer [0-4]", "");
+            String trimmed = removeAnswer.replaceAll("(Correct answer)|(Correct Answer)", "").trim();
             returned.append(trimmed+"\n");
             return returned.toString();
         }
