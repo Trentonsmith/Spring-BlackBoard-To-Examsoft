@@ -34,7 +34,7 @@ class BBtoEsApplicationTests {
 				*a. Have the patient abduct the arm from the fully adducted position against resistance
 				b. Have the patient adduct the arm from the fully abducted position against resistance
 				c. Have the patient extend the elbow, abduct the arm and medially rotate against resistance
-				d. Have the patient flex the elbow, abduct the arm and medially rotate against resistancesabotage!
+				d. Have the patient flex the elbow, abduct the arm and medially rotate against resistance
 				    
 				Title: TEST 2. Compression of which of the following nerves may result in weak thumb flexion?
 				a. Deep Ulnar N
