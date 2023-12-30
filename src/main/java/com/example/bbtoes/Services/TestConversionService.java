@@ -22,7 +22,7 @@ test.setTestData(test.getTestData().replaceAll("Option *", "Answer "));
 
         }
 
-        System.out.println(test.getTestData());
+    //    System.out.println(test.getTestData());
        // System.out.println(test.getTestData());
 
         String regex = "(Question [0-9]+[\\s\\S]*?\\n*(?=Question [0-9]+|$))";
@@ -159,7 +159,7 @@ test.setTestData(test.getTestData().replaceAll("Option *", "Answer "));
                     sb.append(ifCorrectAppendAsteriskMultipleChoice(multipleChoiceThreem.group(4), 'b'));
                     sb.append(ifCorrectAppendAsteriskMultipleChoice(multipleChoiceThreem.group(5), 'c'));
                     sb.append("\n");
-                    System.out.println(sb);
+              //      System.out.println(sb);
                 }
             }
 
@@ -185,9 +185,9 @@ test.setTestData(test.getTestData().replaceAll("Option *", "Answer "));
 
 
         }
-        System.out.println(sb);
-        System.out.println(revolution);
-        System.out.println("Images needed for questions: " + jpgNeededList);
+      //  System.out.println(sb);
+      //  System.out.println(revolution);
+      //  System.out.println("Images needed for questions: " + jpgNeededList);
         return sb.toString();
     }
 
