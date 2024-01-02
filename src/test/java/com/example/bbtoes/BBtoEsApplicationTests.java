@@ -30,7 +30,7 @@ class BBtoEsApplicationTests {
 
 	public static String returnDesiredResultString(){
 		String pleaseWork = """
-				Title: TEST 1. Which of the following actions would BEST assess the strength of the supraspinatus?1
+				Title: TEST 1. Which of the following actions would BEST assess the strength of the supraspinatus?
 				*a. Have the patient abduct the arm from the fully adducted position against resistance
 				b. Have the patient adduct the arm from the fully abducted position against resistance
 				c. Have the patient extend the elbow, abduct the arm and medially rotate against resistance
